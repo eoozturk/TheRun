@@ -6,10 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class CollectCoin : MonoBehaviour
 {
-    public int score;
+    public int score, maxScore;
     public Text scoreText;
 
-    public PlayerController player;
+    public PlayerController playerControl;
+    public Animator playerAnim;
+    public GameObject player;
+    public GameObject endPanel;
+
+    private void Start()
+    {
+        playerAnim = player.GetComponentInChildren<Animator>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,8 +29,24 @@ public class CollectCoin : MonoBehaviour
         }
         else if (other.CompareTag("End"))
         {
-            player.runningSpeed = 0;
+            playerControl.runningSpeed = 0;
+            transform.Rotate(transform.rotation.x, 180, transform.rotation.z);
+
+            if(score >= maxScore)
+            {
+                playerAnim.SetBool("win",true);
+            }
+            else
+            {
+                playerAnim.SetBool("lose", true);
+                endPanel.SetActive(true);
+            }
         }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void OnCollisionEnter(Collision collision)
