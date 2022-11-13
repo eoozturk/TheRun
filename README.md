@@ -2,6 +2,6 @@
 
 * Character Control
 * Collect Coins
-* Character Animations
+* Character Animation
 * Level Design
-* Animator and Animations
+* Animator and Animation
